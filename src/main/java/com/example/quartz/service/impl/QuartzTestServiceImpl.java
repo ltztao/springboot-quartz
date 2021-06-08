@@ -1,6 +1,7 @@
 package com.example.quartz.service.impl;
 
 import com.example.quartz.service.QuartzTestService;
+import com.example.quartz.task.PropertyQuartzJob;
 import com.example.quartz.task.TestQuartzJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,11 @@ public class QuartzTestServiceImpl implements QuartzTestService {
         try {
             JobDataMap dataMap = new JobDataMap();
             dataMap.put("name", jobName);
-            JobDetail jobDetail = JobBuilder.newJob(TestQuartzJob.class).withIdentity(jobName, jobGroup).usingJobData(dataMap)// 任务名称和组构成任务key
+            JobDetail jobDetail = JobBuilder
+//                    .newJob(PropertyQuartzJob.class)  // 属性方式注入JobDataMap
+                    .newJob(TestQuartzJob.class)
+                    .withIdentity(jobName, jobGroup)
+                    .usingJobData(dataMap)// 任务名称和组构成任务key
                     .build();
             // 定义调度触发规则
             // 使用cornTrigger规则
