@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   application:
     name: quartz-test
@@ -17,6 +17,7 @@ spring:
             tablePrefix: QRTZ_
             isClustered: false
             dataSource: default
+            acquireTriggersWithinLock: true # 多实例加锁
             clusterCheckinInterval: 10000
             useProperties: true
           threadPool:
@@ -24,9 +25,10 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
+
           dataSource:
             default:
-              URL: jdbc:mysql://localhost:3306/quartz-test?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&allowMultiQueries=true&nullCatalogMeansCurrent=true
+              URL: jdbc:mysql://localhost:3306/quartz_test_68?serverTimezone=CTT&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&allowMultiQueries=true&nullCatalogMeansCurrent=true
               user: root
               password: 123456
               driver: com.mysql.cj.jdbc.Driver
