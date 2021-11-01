@@ -32,7 +32,9 @@ public class QuartzTestServiceImpl implements QuartzTestService {
             // 使用cornTrigger规则
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup)// 触发器key
                     .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND))
-                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * * * ?"))
+                    // withMisfireHandlingInstructionDoNothing() 设置第一次添加不执行计划
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * * * ?")
+                            .withMisfireHandlingInstructionDoNothing())
                     .startNow()
                     .build();
             // 把作业和触发器注册到任务调度中

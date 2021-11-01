@@ -12,3 +12,13 @@
     jobStore:
       acquireTriggersWithinLock: true # 多实例加锁
     ```
+* 设置第一次添加不执行计划: withMisfireHandlingInstructionDoNothing()
+```$xslt
+Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup)// 触发器key
+                    .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND))
+                    // withMisfireHandlingInstructionDoNothing() 设置第一次添加不执行计划
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * * * ?")
+                    .withMisfireHandlingInstructionDoNothing())
+                    .startNow()
+                    .build();
+```
